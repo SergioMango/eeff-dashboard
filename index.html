@@ -119,7 +119,6 @@
   <div class="tab" onclick="switchTab('cartera')">Analisis de Cartera</div>
   <div class="tab" onclick="switchTab('ratios')">Razones Financieras</div>
   <div class="tab" onclick="switchTab('crown')">KPIs Operativos</div>
-  <div class="tab" onclick="switchTab('conciliacion')" style="border-left:1px solid var(--border);margin-left:4px;">Conciliacion EEFF vs Crown</div>
   <div class="tab" onclick="switchTab('proyecciones')" style="border-left:1px solid var(--border);margin-left:4px;">Proyecciones & Facility</div>
 </div>
 
@@ -370,81 +369,6 @@
     <div class="card-title">Crown Metrics — Comparativo Mensual 2024 vs 2025</div>
     <div class="card-subtitle">Datos reales de Athena crown_metricas | Columnas &Delta; = variacion YoY</div>
     <div class="table-scroll"><table class="fin-table" id="tableCrownYoY"></table></div>
-  </div>
-</div>
-
-<!-- ═══ TAB: Conciliacion EEFF vs Crown ═══ -->
-<div id="tab-conciliacion" class="tab-panel">
-  <!-- Resumen ejecutivo -->
-  <div class="card">
-    <div class="card-title">Conciliacion EEFF Contables vs Metricas Operativas Crown</div>
-    <div class="card-subtitle">Analisis de diferencias entre estados financieros (EEFF) y metricas analiticas (Crown) — 2025</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;">
-      <div style="background:#F8F9FA;border-radius:12px;padding:16px;text-align:center;">
-        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:4px;">Ingresos EEFF (devengado)</div>
-        <div style="font-size:22px;font-weight:700;color:var(--text);">$5,890,955</div>
-      </div>
-      <div style="background:#F8F9FA;border-radius:12px;padding:16px;text-align:center;">
-        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:4px;">Revenue Crown (cobrado)</div>
-        <div style="font-size:22px;font-weight:700;color:var(--text);">$6,144,714</div>
-      </div>
-      <div style="background:#FFF3CD;border-radius:12px;padding:16px;text-align:center;">
-        <div style="font-size:11px;color:var(--text-secondary);margin-bottom:4px;">Diferencia</div>
-        <div style="font-size:22px;font-weight:700;color:#FF6B35;">+$253,760</div>
-        <div style="font-size:10px;color:var(--text-secondary);">Crown incluia IVA en el calculo (pendiente de corregir en Crown)</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Que coincide y que no -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-    <div class="card" style="border-left:4px solid #2CC87B;">
-      <div class="card-title" style="color:#2CC87B;">Datos reales: EEFF</div>
-      <div style="font-size:13px;line-height:1.8;">
-        <div><strong>Ingresos EEFF</strong> — Cifra auditada, sin IVA. Fuente de verdad para el banco.</div>
-        <div><strong>Costos EEFF</strong> — Intereses bancarios + defaults reales. Cifra auditada.</div>
-        <div><strong>Fees</strong> — Proteccion ($3,544,560), Factoraje ($1,595,400), Anual ($165,000) coinciden al centavo con Crown.</div>
-      </div>
-    </div>
-    <div class="card" style="border-left:4px solid #FF6B35;">
-      <div class="card-title" style="color:#FF6B35;">Diferencias explicadas: Crown vs EEFF</div>
-      <div style="font-size:13px;line-height:1.8;">
-        <div><strong>Revenue Crown incluye IVA</strong> — Crown calculaba revenue con IVA incluido. Pendiente de corregir en Crown. Esa es la diferencia de +$253,760 en ingresos.</div>
-        <div><strong>Costos Crown incluyen costos "blue"</strong> — Crown agrega costos analiticos (equity $469K, fijos $61K) para hacer proyecciones. No son costos reales.</div>
-        <div style="margin-top:4px;color:var(--text-secondary);font-size:12px;">Los costos reales son los de EEFF. Crown se corregira para quitar IVA y separar costos blue de los reales.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tabla mensual de conciliacion ingresos -->
-  <div class="card">
-    <div class="card-title">Ingresos Mensual — EEFF vs Crown Revenue</div>
-    <div class="card-subtitle">EEFF = Fees + Penalizaciones (sin IVA) | Crown = incluye IVA (pendiente de corregir)</div>
-    <div class="table-scroll"><table class="fin-table" id="tableConcRev"></table></div>
-  </div>
-
-  <!-- Tabla mensual de conciliacion costos -->
-  <div class="card">
-    <div class="card-title">Costos Mensual — EEFF vs Crown Cost</div>
-    <div class="card-subtitle">EEFF = Costos reales (intereses + defaults) | Crown = incluye costos "blue" analiticos (equity + fijos) para proyecciones</div>
-    <div class="table-scroll"><table class="fin-table" id="tableConcCost"></table></div>
-  </div>
-
-  <!-- Chart de gaps -->
-  <div class="card">
-    <div class="card-title">Gap Mensual: Crown Revenue vs EEFF Ingresos</div>
-    <div class="card-subtitle">Barras = diferencia mensual | Positivo = Crown mayor por inclusion de IVA</div>
-    <div class="chart-container"><canvas id="chartConcGap"></canvas></div>
-  </div>
-
-  <!-- Nota metodologica -->
-  <div class="card" style="background:#F8F9FA;border:1px dashed var(--border);">
-    <div class="card-title" style="font-size:12px;">Nota Metodologica</div>
-    <div style="font-size:12px;line-height:1.7;color:var(--text-secondary);">
-      <strong>EEFF (Estados Financieros)</strong>: Cifras auditadas, sin IVA, costos reales. Fuente de verdad para el banco y reportes regulatorios.<br>
-      <strong>Crown (Metricas Operativas)</strong>: Revenue incluia IVA (pendiente de corregir). Costos incluyen componentes "blue" analiticos (costo de oportunidad del equity + costos fijos asignados) usados para proyecciones internas, no son costos reales.<br>
-      <strong>Las diferencias son conocidas y se estan corrigiendo</strong> — Crown se actualizara para quitar IVA de revenue y separar costos blue. Los EEFF son la fuente de verdad.
-    </div>
   </div>
 </div>
 
@@ -998,53 +922,6 @@ overlayBar('chartGMVOverlay',crown24.map(d=>d.gmv),crown25.map(d=>d.gmv),YELLOW,
 overlayChart('chartRevOverlay',crown24.map(d=>d.rev),crown25.map(d=>d.rev),GREEN,v=>(v/1e3).toFixed(0)+'K');
 overlayBar('chartDisbOverlay',crown24.map(d=>d.disb),crown25.map(d=>d.disb),YELLOW,v=>(v/1e6).toFixed(0)+'M');
 overlayChart('chartTermOverlay',crown24.map(d=>d.term),crown25.map(d=>d.term),BLUE,v=>v+'d');
-
-// ─── CONCILIACION EEFF vs CROWN ───
-function buildConciliacion(){
-  // Revenue conciliation table
-  // Crown COBRANZA POR PENALIZACION mensual (cobradas reales de Athena, al centavo)
-  const crownPenalties = [52176,76980,33617,64903,67639,172601,86278,127184,279846,291316,372365,214850];
-  let h='<thead><tr><th>Mes</th><th>EEFF Ingresos</th><th>Crown Revenue</th><th>Diferencia</th><th>EEFF Penalties</th><th>Crown Penalties (cobradas)</th><th>&Delta; Penalties</th></tr></thead><tbody>';
-  let tEeff=0,tCrown=0,tEP=0,tCP=0;
-  for(let i=0;i<12;i++){
-    const eeff=pl2025.totalIngresos[i];
-    // Crown revenue = EEFF fees (match al centavo) + Crown penalties cobradas
-    const fees=pl2025.feeProteccion[i]+pl2025.feeFactoraje[i]+(pl2025.feeAnual[i]||0);
-    const crown=fees+crownPenalties[i];
-    const diff=crown-eeff;
-    const ep=pl2025.penalizaciones[i];
-    const cp=crownPenalties[i];
-    tEeff+=eeff;tCrown+=crown;tEP+=ep;tCP+=cp;
-    h+=`<tr><td>${MO[i]}</td><td>${fmtK(eeff)}</td><td>${fmtK(crown)}</td><td${diff>0?' style="color:#FF6B35"':diff<0?' style="color:#2CC87B"':''}>${diff>0?'+':''}${fmtK(diff)}</td><td>${fmtK(ep)}</td><td>${fmtK(cp)}</td><td${(cp-ep)>0?' style="color:#FF6B35"':''}>${cp-ep>0?'+':''}${fmtK(cp-ep)}</td></tr>`;
-  }
-  h+=`<tr class="total"><td><strong>Total</strong></td><td><strong>${fmtM(tEeff)}</strong></td><td><strong>${fmtM(tCrown)}</strong></td><td style="color:#FF6B35"><strong>+${fmtK(tCrown-tEeff)}</strong></td><td><strong>${fmtM(tEP)}</strong></td><td><strong>${fmtK(tCP)}</strong></td><td style="color:#FF6B35"><strong>+${fmtK(tCP-tEP)}</strong></td></tr>`;
-  h+='</tbody>';
-  document.getElementById('tableConcRev').innerHTML=h;
-
-  // Cost conciliation table
-  const crownEquity=[0,0,0,0,0,0,0,0,0,0,0,0]; // Crown equity cost embedded in total cost
-  let hc='<thead><tr><th>Mes</th><th>EEFF Costos</th><th>Crown Costos</th><th>Diferencia</th><th>Notas</th></tr></thead><tbody>';
-  let tEC=0,tCC=0;
-  for(let i=0;i<12;i++){
-    const ec=pl2025.totalCostos[i];
-    const cc=crown25[i].cost;
-    const diff=cc-ec;
-    tEC+=ec;tCC+=cc;
-    const note=Math.abs(diff)>50000?'Incluye costos analiticos Crown':'~Match';
-    hc+=`<tr><td>${MO[i]}</td><td>${fmtK(ec)}</td><td>${fmtK(cc)}</td><td${diff>0?' style="color:#FF6B35"':diff<0?' style="color:#2CC87B"':''}>${diff>0?'+':''}${fmtK(diff)}</td><td style="font-size:11px;color:var(--text-secondary)">${note}</td></tr>`;
-  }
-  hc+=`<tr class="total"><td><strong>Total</strong></td><td><strong>${fmtM(tEC)}</strong></td><td><strong>${fmtM(tCC)}</strong></td><td style="color:#FF6B35"><strong>+${fmtK(tCC-tEC)}</strong></td><td style="font-size:11px;color:var(--text-secondary)">Crown incluye equity $469K + fijos $61K</td></tr>`;
-  hc+='</tbody>';
-  document.getElementById('tableConcCost').innerHTML=hc;
-
-  // Gap chart — difference is purely penalties (cobradas - devengadas)
-  const gaps=[];
-  for(let i=0;i<12;i++) gaps.push(crownPenalties[i] - pl2025.penalizaciones[i]);
-  new Chart(document.getElementById('chartConcGap'),{type:'bar',data:{labels:MO,datasets:[
-    {label:'Gap (Crown - EEFF)',data:gaps,backgroundColor:gaps.map(g=>g>0?ORANGE+'88':GREEN+'88'),borderRadius:6}
-  ]},options:{...baseOpts,plugins:{...baseOpts.plugins,legend:{display:true,position:'bottom',labels:{font:{size:10},usePointStyle:true,pointStyle:'circle',padding:14}}},scales:{...baseOpts.scales,y:{ticks:{font:{size:9},callback:v=>(v/1e3).toFixed(0)+'K'},grid:{color:'#F0F0F0'}}}}});
-}
-buildConciliacion();
 
 // ─── PROYECCIONES & FACILITY (Financial Model v3) ───
 (function(){
