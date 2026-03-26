@@ -391,7 +391,7 @@
       <div style="background:#FFF3CD;border-radius:12px;padding:16px;text-align:center;">
         <div style="font-size:11px;color:var(--text-secondary);margin-bottom:4px;">Diferencia</div>
         <div style="font-size:22px;font-weight:700;color:#FF6B35;">+$253,760</div>
-        <div style="font-size:10px;color:var(--text-secondary);">100% explicado por penalizaciones cobradas vs devengadas</div>
+        <div style="font-size:10px;color:var(--text-secondary);">Crown incluia IVA en el calculo (pendiente de corregir en Crown)</div>
       </div>
     </div>
   </div>
@@ -399,21 +399,19 @@
   <!-- Que coincide y que no -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
     <div class="card" style="border-left:4px solid #2CC87B;">
-      <div class="card-title" style="color:#2CC87B;">Conceptos que coinciden</div>
+      <div class="card-title" style="color:#2CC87B;">Datos reales: EEFF</div>
       <div style="font-size:13px;line-height:1.8;">
-        <div><strong>Fee Proteccion</strong> — Identico al centavo en ambos ($3,544,560)</div>
-        <div><strong>Fee Factoraje</strong> — Identico al centavo en ambos ($1,595,400)</div>
-        <div><strong>Fee Anual</strong> — Identico al centavo en ambos ($165,000)</div>
-        <div><strong>Defaults (impago)</strong> — $1,442,982 identico en EEFF costos y Crown impago</div>
+        <div><strong>Ingresos EEFF</strong> — Cifra auditada, sin IVA. Fuente de verdad para el banco.</div>
+        <div><strong>Costos EEFF</strong> — Intereses bancarios + defaults reales. Cifra auditada.</div>
+        <div><strong>Fees</strong> — Proteccion ($3,544,560), Factoraje ($1,595,400), Anual ($165,000) coinciden al centavo con Crown.</div>
       </div>
     </div>
     <div class="card" style="border-left:4px solid #FF6B35;">
-      <div class="card-title" style="color:#FF6B35;">Diferencia: Penalizaciones cobradas vs devengadas</div>
+      <div class="card-title" style="color:#FF6B35;">Diferencias explicadas: Crown vs EEFF</div>
       <div style="font-size:13px;line-height:1.8;">
-        <div><strong>EEFF Penalizaciones (devengado)</strong>: $1,585,995 — reconocimiento contable segun NIF</div>
-        <div><strong>Crown Penalizaciones (cobrado)</strong>: $1,839,755 — cash efectivamente cobrado</div>
-        <div><strong>Diferencia: +$253,760</strong> — explica el 100% del gap entre EEFF y Crown</div>
-        <div style="margin-top:4px;color:var(--text-secondary);font-size:12px;">Los costos analiticos de Crown (equity $469K, fijos $61K) no tienen contraparte en EEFF — son metricas internas de rentabilidad.</div>
+        <div><strong>Revenue Crown incluye IVA</strong> — Crown calculaba revenue con IVA incluido. Pendiente de corregir en Crown. Esa es la diferencia de +$253,760 en ingresos.</div>
+        <div><strong>Costos Crown incluyen costos "blue"</strong> — Crown agrega costos analiticos (equity $469K, fijos $61K) para hacer proyecciones. No son costos reales.</div>
+        <div style="margin-top:4px;color:var(--text-secondary);font-size:12px;">Los costos reales son los de EEFF. Crown se corregira para quitar IVA y separar costos blue de los reales.</div>
       </div>
     </div>
   </div>
@@ -421,21 +419,21 @@
   <!-- Tabla mensual de conciliacion ingresos -->
   <div class="card">
     <div class="card-title">Ingresos Mensual — EEFF vs Crown Revenue</div>
-    <div class="card-subtitle">EEFF = Fees + Penalizaciones devengadas | Crown = Fees (identicos) + Penalizaciones cobradas (Athena crown_metricas)</div>
+    <div class="card-subtitle">EEFF = Fees + Penalizaciones (sin IVA) | Crown = incluye IVA (pendiente de corregir)</div>
     <div class="table-scroll"><table class="fin-table" id="tableConcRev"></table></div>
   </div>
 
   <!-- Tabla mensual de conciliacion costos -->
   <div class="card">
     <div class="card-title">Costos Mensual — EEFF vs Crown Cost</div>
-    <div class="card-subtitle">EEFF = Intereses bancarios + Defaults | Crown = COSTO DE CREDITO (intereses + impago + equity + fijos)</div>
+    <div class="card-subtitle">EEFF = Costos reales (intereses + defaults) | Crown = incluye costos "blue" analiticos (equity + fijos) para proyecciones</div>
     <div class="table-scroll"><table class="fin-table" id="tableConcCost"></table></div>
   </div>
 
   <!-- Chart de gaps -->
   <div class="card">
-    <div class="card-title">Gap Mensual: Penalizaciones Cobradas (Crown) vs Devengadas (EEFF)</div>
-    <div class="card-subtitle">Barras = diferencia mensual en penalizaciones | Positivo = Crown cobro mas de lo que EEFF reconocio</div>
+    <div class="card-title">Gap Mensual: Crown Revenue vs EEFF Ingresos</div>
+    <div class="card-subtitle">Barras = diferencia mensual | Positivo = Crown mayor por inclusion de IVA</div>
     <div class="chart-container"><canvas id="chartConcGap"></canvas></div>
   </div>
 
@@ -443,9 +441,9 @@
   <div class="card" style="background:#F8F9FA;border:1px dashed var(--border);">
     <div class="card-title" style="font-size:12px;">Nota Metodologica</div>
     <div style="font-size:12px;line-height:1.7;color:var(--text-secondary);">
-      <strong>EEFF (Estados Financieros)</strong>: Contabilidad devengada segun NIF. Ingresos reconocidos cuando se cumplen criterios contables.<br>
-      <strong>Crown (Metricas Operativas)</strong>: Perspectiva analitica/cash. Revenue incluye toda cobranza recibida incluyendo penalizaciones cobradas. Costos incluyen costo de oportunidad (equity) y costos fijos asignados.<br>
-      <strong>Las diferencias son esperadas</strong> — reflejan dos perspectivas complementarias: contable (para reportes regulatorios) vs analitica (para decision-making operativo).
+      <strong>EEFF (Estados Financieros)</strong>: Cifras auditadas, sin IVA, costos reales. Fuente de verdad para el banco y reportes regulatorios.<br>
+      <strong>Crown (Metricas Operativas)</strong>: Revenue incluia IVA (pendiente de corregir). Costos incluyen componentes "blue" analiticos (costo de oportunidad del equity + costos fijos asignados) usados para proyecciones internas, no son costos reales.<br>
+      <strong>Las diferencias son conocidas y se estan corrigiendo</strong> — Crown se actualizara para quitar IVA de revenue y separar costos blue. Los EEFF son la fuente de verdad.
     </div>
   </div>
 </div>
